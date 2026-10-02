@@ -19,9 +19,3 @@ Demo logins: admin `admin@kaarigar.expo` / `admin123`; kaarigar `meera@demo.in` 
 - SEO basics: semantic HTML, per-page title and meta description, Open Graph tags, schema.org `Event` JSON-LD.
 
 - **Backend & Database:** Integrated live **Supabase PostgreSQL** cloud backend with real-time sync across devices, plus automatic fallback to browser `localStorage` when offline.
-
-## Skipped (Future Enhancements)
-- **Advanced Auth Security:** Production upgrade path for bcrypt password hashing and JWT / HTTP-Only cookie session tokens.
-- **Server-Side Rendering:** Production transition to Next.js for server-rendered event URLs and automated XML sitemaps.
-- **Native Mobile Features:** PWA Web Manifest & Service Worker for push notifications and offline asset caching.
-- Edit/delete existing events, automated email notifications, and end-to-end integration tests.
