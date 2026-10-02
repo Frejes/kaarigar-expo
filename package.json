@@ -1,0 +1,7 @@
+{
+  "name": "kaarigar-expo",
+  "version": "1.0.0",
+  "description": "Kaarigar Expo - mela registration platform (Admin, Kaarigar, Visitor)",
+  "scripts": { "start": "npx serve . -l 3000" },
+  "license": "MIT"
+}

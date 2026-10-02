@@ -1,0 +1,872 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <title>Kaarigar Expo – Mela Registration Platform</title>
+    <meta name="description"
+        content="Discover upcoming melas, meet artisans (kaarigars) and register for handicraft exhibitions with Kaarigar Expo.">
+    <meta property="og:title" content="Kaarigar Expo">
+    <meta property="og:description" content="Register for melas, apply as an artisan, meet the kaarigars.">
+    <style>
+        :root {
+            --bg: #fbf6ee;
+            --card: #fff;
+            --tx: #2b2118;
+            --mu: #7a6a5a;
+            --ac: #b4501e;
+            --bd: #e6d9c6;
+            --ok: #2e7d32;
+            --no: #c62828;
+            --wa: #b26a00;
+            box-sizing: border-box;
+            padding-top: env(safe-area-inset-top, 0px);
+            padding-bottom: env(safe-area-inset-bottom, 0px)
+        }
+
+        @media(prefers-color-scheme:dark) {
+            :root:not([data-theme="light"]) {
+                --bg: #1b1511;
+                --card: #271f19;
+                --tx: #f3e9dc;
+                --mu: #b5a592;
+                --ac: #e07a43;
+                --bd: #3d3228
+            }
+        }
+
+        :root[data-theme="dark"] {
+            --bg: #1b1511;
+            --card: #271f19;
+            --tx: #f3e9dc;
+            --mu: #b5a592;
+            --ac: #e07a43;
+            --bd: #3d3228
+        }
+
+        * {
+            box-sizing: border-box
+        }
+
+        html {
+            scroll-padding-top: env(safe-area-inset-top, 0px)
+        }
+
+        body {
+            margin: 0;
+            background: var(--bg);
+            color: var(--tx);
+            font: 16px/1.5 Georgia, 'Times New Roman', serif
+        }
+
+        header {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            align-items: center;
+            justify-content: space-between;
+            padding: 12px 16px;
+            border-bottom: 1px solid var(--bd)
+        }
+
+        header a.logo {
+            font-size: 1.3rem;
+            font-weight: bold;
+            color: var(--ac);
+            text-decoration: none
+        }
+
+        nav {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            align-items: center;
+            font: 14px system-ui, sans-serif
+        }
+
+        main {
+            max-width: 960px;
+            margin: 0 auto;
+            padding: 16px
+        }
+
+        a {
+            color: var(--ac)
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 14px
+        }
+
+        .card {
+            background: var(--card);
+            border: 1px solid var(--bd);
+            border-radius: 10px;
+            padding: 14px;
+            margin-bottom: 12px
+        }
+
+        .grid .card {
+            margin: 0
+        }
+
+        h1,
+        h2,
+        h3 {
+            margin: .3em 0
+        }
+
+        .mu {
+            color: var(--mu);
+            font: 14px system-ui, sans-serif
+        }
+
+        input,
+        textarea,
+        select,
+        button {
+            font: 15px system-ui, sans-serif;
+            padding: 9px 10px;
+            border-radius: 8px;
+            border: 1px solid var(--bd);
+            background: var(--card);
+            color: var(--tx);
+            max-width: 100%
+        }
+
+        input,
+        textarea,
+        select {
+            width: 100%;
+            margin: 4px 0 10px
+        }
+
+        button,
+        .btn {
+            background: var(--ac);
+            color: #fff;
+            border: 0;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            padding: 9px 14px;
+            border-radius: 8px;
+            font: 15px system-ui, sans-serif
+        }
+
+        button.s {
+            background: transparent;
+            color: var(--ac);
+            border: 1px solid var(--ac)
+        }
+
+        button.g {
+            background: var(--ok)
+        }
+
+        button.r {
+            background: var(--no)
+        }
+
+        .tag {
+            font: 12px system-ui;
+            padding: 2px 8px;
+            border-radius: 99px;
+            color: #fff
+        }
+
+        .pending {
+            background: var(--wa)
+        }
+
+        .approved {
+            background: var(--ok)
+        }
+
+        .rejected {
+            background: var(--no)
+        }
+
+        img.ph {
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
+            border-radius: 8px;
+            background: var(--bd)
+        }
+
+        .row {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between
+        }
+
+        .msg {
+            padding: 10px;
+            border-radius: 8px;
+            background: var(--bd);
+            margin-bottom: 12px;
+            font: 14px system-ui
+        }
+
+        footer {
+            text-align: center;
+            padding: 24px;
+            font: 13px system-ui;
+            color: var(--mu)
+        }
+    </style>
+    <meta name="theme-color" content="#7a1f2b">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-title" content="Kaarigar Expo">
+    <style>
+        :root {
+            --bg: #faf7f2;
+            --card: #fff;
+            --tx: #241a14;
+            --mu: #76685c;
+            --ac: #7a1f2b;
+            --gd: #d99a2b;
+            --bd: #ece3d6;
+            --ok: #2f7d4f;
+            --no: #b3261e;
+            --wa: #b7791f;
+            --sh: 0 1px 2px rgba(36, 26, 20, .06), 0 6px 18px rgba(36, 26, 20, .06)
+        }
+
+        @media(prefers-color-scheme:dark) {
+            :root:not([data-theme="light"]) {
+                --bg: #17110e;
+                --card: #241b16;
+                --tx: #f4ece2;
+                --mu: #b9a995;
+                --ac: #e0707c;
+                --gd: #e3a94a;
+                --bd: #382d25;
+                --sh: none
+            }
+        }
+
+        :root[data-theme="dark"] {
+            --bg: #17110e;
+            --card: #241b16;
+            --tx: #f4ece2;
+            --mu: #b9a995;
+            --ac: #e0707c;
+            --gd: #e3a94a;
+            --bd: #382d25;
+            --sh: none
+        }
+
+        body {
+            font: 16px/1.55 system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+            letter-spacing: -.005em
+        }
+
+        h1,
+        h2,
+        h3 {
+            font-family: Georgia, 'Times New Roman', serif;
+            letter-spacing: -.01em
+        }
+
+        header {
+            position: sticky;
+            top: env(safe-area-inset-top, 0px);
+            z-index: 10;
+            background: color-mix(in srgb, var(--bg) 88%, transparent);
+            backdrop-filter: blur(10px);
+            padding: 14px 20px
+        }
+
+        header a.logo {
+            font-family: Georgia, serif;
+            font-size: 1.25rem;
+            color: var(--ac)
+        }
+
+        nav a {
+            color: var(--tx);
+            text-decoration: none;
+            padding: 6px 10px;
+            border-radius: 8px
+        }
+
+        nav a:hover {
+            background: var(--bd)
+        }
+
+        nav a.btn {
+            color: #fff
+        }
+
+        .card {
+            border-radius: 14px;
+            box-shadow: var(--sh);
+            padding: 18px
+        }
+
+        button,
+        .btn {
+            background: var(--ac);
+            color: #fff;
+            border-radius: 10px;
+            font-weight: 600;
+            padding: 10px 16px;
+            transition: transform .1s, opacity .15s
+        }
+
+        button:hover,
+        .btn:hover {
+            opacity: .92
+        }
+
+        button:active {
+            transform: scale(.97)
+        }
+
+        :root[data-theme="dark"] button,
+        :root[data-theme="dark"] .btn {
+            color: #17110e
+        }
+
+        @media(prefers-color-scheme:dark) {
+
+            :root:not([data-theme="light"]) button,
+            :root:not([data-theme="light"]) .btn {
+                color: #17110e
+            }
+        }
+
+        button.s {
+            background: transparent;
+            color: var(--ac);
+            border: 1.5px solid var(--ac)
+        }
+
+        input,
+        textarea,
+        select {
+            border-radius: 10px;
+            padding: 11px 12px
+        }
+
+        input:focus,
+        textarea:focus,
+        select:focus {
+            outline: 2px solid var(--gd);
+            border-color: transparent
+        }
+
+        label {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--mu)
+        }
+
+        .tag {
+            text-transform: capitalize;
+            font-weight: 600;
+            padding: 3px 10px
+        }
+
+        .hero {
+            background: linear-gradient(135deg, #7a1f2b, #a8402e 60%, #d99a2b);
+            color: #fff;
+            border-radius: 20px;
+            padding: 36px 26px;
+            margin-bottom: 26px;
+            box-shadow: var(--sh)
+        }
+
+        .hero h1 {
+            font-size: clamp(1.7rem, 5vw, 2.6rem);
+            margin: 0 0 8px;
+            line-height: 1.15
+        }
+
+        .hero p {
+            margin: 0 0 18px;
+            max-width: 520px;
+            opacity: .92
+        }
+
+        .hero .btn {
+            background: #fff;
+            color: #7a1f2b
+        }
+
+        .mc {
+            display: flex;
+            gap: 14px;
+            align-items: flex-start
+        }
+
+        .mc h3 {
+            margin: 0 0 4px;
+            font-size: 1.1rem
+        }
+
+        .mc h3 a {
+            color: var(--tx);
+            text-decoration: none
+        }
+
+        .mc p {
+            margin: 6px 0 12px
+        }
+
+        .db {
+            flex: none;
+            width: 56px;
+            text-align: center;
+            border-radius: 12px;
+            background: var(--bd);
+            padding: 6px 0;
+            line-height: 1.1
+        }
+
+        .db b {
+            display: block;
+            font-size: 1.4rem;
+            color: var(--ac)
+        }
+
+        .db span {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: .08em;
+            color: var(--mu)
+        }
+
+        .av {
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--ac), var(--gd));
+            color: #fff;
+            display: grid;
+            place-items: center;
+            font: bold 1.2rem Georgia, serif;
+            margin-bottom: 10px
+        }
+
+        img.ph {
+            border-radius: 12px
+        }
+
+        #tabs {
+            display: none
+        }
+
+        @media(max-width:700px) {
+            nav {
+                display: none
+            }
+
+            main {
+                padding: 16px 16px 96px
+            }
+
+            footer {
+                padding-bottom: 96px
+            }
+
+            #tabs {
+                display: flex;
+                position: fixed;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                z-index: 20;
+                background: var(--card);
+                border-top: 1px solid var(--bd);
+                padding: 6px 6px calc(6px + env(safe-area-inset-bottom, 0px));
+                justify-content: space-around;
+                font: 11px system-ui, sans-serif
+            }
+
+            #tabs a {
+                flex: 1;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                gap: 3px;
+                padding: 6px 0;
+                color: var(--mu);
+                text-decoration: none;
+                border-radius: 10px
+            }
+
+            #tabs a.on {
+                color: var(--ac);
+                font-weight: 700
+            }
+
+            #tabs svg {
+                width: 22px;
+                height: 22px;
+                stroke: currentColor;
+                fill: none;
+                stroke-width: 1.8;
+                stroke-linecap: round;
+                stroke-linejoin: round
+            }
+
+            .hero {
+                padding: 28px 20px
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header><a class="logo" href="#/">🪔 Kaarigar Expo</a>
+        <nav id="nav"></nav>
+    </header>
+    <main id="app"></main>
+    <div id="tabs"></div>
+    <footer>Demo data is stored in this browser only (localStorage). Admin demo: admin@kaarigar.expo / admin123</footer>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script>
+        // Supabase Credentials Configuration
+        // Replace these placeholders with your actual Supabase Project URL and Anon Public Key:
+        const SUPABASE_URL = 'https://cdxextqyummkpwwdrzeu.supabase.co';
+        const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNkeGV4dHF5dW1ta3B3d2RyemV1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTA5MTA1NTAsImV4cCI6MjEwNjQ4NjU1MH0.3qwzME5mbicQEU7KzZlxzVLbmdDxmv_sAFUzsZ4s5GU';
+
+        const isSupabaseConfigured = () => SUPABASE_URL && !SUPABASE_URL.includes('YOUR_SUPABASE_URL') && typeof supabase !== 'undefined';
+        const dbClient = isSupabaseConfigured() ? supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY) : null;
+
+        // Helpers
+        const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+        const uid = () => Math.random().toString(36).slice(2, 10);
+        const fmt = d => { try { return new Date(d + 'T00:00').toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' }) } catch { return d } };
+
+        let db = { users: [], melas: [], apps: [], rsvps: [] };
+        let me = null, note = '', loading = true;
+
+        // Load Data from Supabase or LocalStorage
+        async function loadData() {
+            loading = true;
+            render();
+            if (isSupabaseConfigured()) {
+                try {
+                    const [uRes, mRes, aRes, rRes] = await Promise.all([
+                        dbClient.from('profiles').select('*'),
+                        dbClient.from('melas').select('*'),
+                        dbClient.from('applications').select('*'),
+                        dbClient.from('rsvps').select('*')
+                    ]);
+
+                    db.users = (uRes.data || []).map(u => ({ ...u, desc: u.description }));
+                    db.melas = mRes.data || [];
+                    db.apps = (aRes.data || []).map(a => ({ ...a, mela: a.mela_id, user: a.user_id }));
+                    db.rsvps = (rRes.data || []).map(r => ({ ...r, mela: r.mela_id, user: r.user_id }));
+                } catch (err) {
+                    console.error('Supabase load error:', err);
+                }
+            } else {
+                // LocalStorage Fallback
+                try { db = JSON.parse(localStorage.getItem('ke_db')) } catch { }
+                if (!db || !db.users) {
+                    const d = new Date(Date.now() + 20 * 864e5).toISOString().slice(0, 10);
+                    db = {
+                        users: [
+                            { id: 'a1', role: 'admin', name: 'Admin', email: 'admin@kaarigar.expo', pass: 'admin123' },
+                            { id: 'k1', role: 'kaarigar', name: 'Meera Naik', email: 'meera@demo.in', pass: 'demo', craft: 'Terracotta pottery', desc: 'Hand-thrown clay lamps and planters from Goa.', photo: '' }
+                        ],
+                        melas: [
+                            { id: 'm1', name: 'Goa Heritage Craft Mela', date: d, location: 'Panaji, Goa', desc: 'Three days of handmade crafts, food and folk music.' }
+                        ],
+                        apps: [{ id: 'p1', mela: 'm1', user: 'k1', status: 'approved' }],
+                        rsvps: []
+                    };
+                    localStorage.setItem('ke_db', JSON.stringify(db));
+                }
+            }
+
+            // Restore current user session
+            try {
+                const savedId = localStorage.getItem('ke_me');
+                me = db.users.find(u => u.id === savedId) || null;
+            } catch { }
+            loading = false;
+            render();
+        }
+
+        // Save Local Handoff / Cache
+        const saveLocal = () => {
+            try {
+                localStorage.setItem('ke_me', me ? me.id : '');
+                if (!isSupabaseConfigured()) localStorage.setItem('ke_db', JSON.stringify(db));
+            } catch { }
+        };
+
+        const U = id => db.users.find(u => u.id === id);
+        const upcoming = () => db.melas.filter(m => m.date >= new Date().toISOString().slice(0, 10)).sort((a, b) => a.date.localeCompare(b.date));
+        const go = h => { location.hash = h };
+        const tag = s => `<span class="tag ${s}">${s}</span>`;
+
+        function meta(t, d) {
+            document.title = t + ' – Kaarigar Expo';
+            document.querySelector('meta[name=description]').content = d;
+            document.querySelectorAll('script.ld').forEach(e => e.remove());
+        }
+        function ld(m) {
+            const s = document.createElement('script');
+            s.type = 'application/ld+json';
+            s.className = 'ld';
+            s.textContent = JSON.stringify({ '@context': 'https://schema.org', '@type': 'Event', name: m.name, startDate: m.date, location: { '@type': 'Place', name: m.location }, description: m.desc });
+            document.head.appendChild(s);
+        }
+
+        const ic = {
+            h: '<path d="M3 11l9-8 9 8v9a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/>',
+            u: '<circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-7 8-7s8 3 8 7"/>',
+            i: '<path d="M15 3h5v18h-5M10 17l5-5-5-5M15 12H3"/>',
+            p: '<circle cx="9" cy="8" r="4"/><path d="M2 21c0-4 3-6 7-6M19 8v6M16 11h6"/>',
+            o: '<path d="M9 21H5a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h4M16 17l5-5-5-5M21 12H9"/>'
+        };
+
+        function nav() {
+            const h = location.hash || '#/', t = (href, k, l) => `<a href="${href}" class="${h === href ? 'on' : ''}"><svg viewBox="0 0 24 24">${ic[k]}</svg><span>${l}</span></a>`;
+            const dbBadge = isSupabaseConfigured() ? '<span style="font-size:11px;background:#2e7d32;color:#fff;padding:2px 7px;border-radius:99px;margin-left:6px;font-weight:bold">⚡ Supabase Connected</span>' : '<span style="font-size:11px;background:#7a6a5a;color:#fff;padding:2px 7px;border-radius:99px;margin-left:6px">Local Storage</span>';
+            document.getElementById('nav').innerHTML = `<a href="#/">Melas</a>` + (me ? `<a href="#/dash">Dashboard (${esc(me.role)})</a>${dbBadge}<button class="s" onclick="logout()">Log out</button>` : `<a href="#/login">Log in</a><a class="btn" href="#/signup">Sign up</a>${dbBadge}`);
+            document.getElementById('tabs').innerHTML = t('#/', 'h', 'Melas') + (me ? t('#/dash', 'u', 'Dashboard') + `<a href="#/" onclick="logout()"><svg viewBox="0 0 24 24">${ic.o}</svg><span>Log out</span></a>` : t('#/login', 'i', 'Log in') + t('#/signup', 'p', 'Sign up'));
+        }
+
+        function logout() { me = null; saveLocal(); go('#/'); render(); }
+
+        function melaCard(m) {
+            const d = new Date(m.date + 'T00:00');
+            return `<article class="card mc"><div class="db"><b>${isNaN(d) ? '' : d.getDate()}</b><span>${isNaN(d) ? '' : d.toLocaleString('en', { month: 'short' })}</span></div><div><h3><a href="#/mela/${m.id}">${esc(m.name)}</a></h3><div class="mu">${esc(m.location)} · ${fmt(m.date)}</div><p>${esc(m.desc)}</p><a class="btn" href="#/mela/${m.id}">View details</a></div></article>`;
+        }
+
+        function home() {
+            meta('Upcoming Melas', 'Browse upcoming melas and exhibitions and register as a visitor or artisan.');
+            const l = upcoming();
+            return `<section class="hero"><h1>Where craft meets community</h1><p>Discover melas, meet India's finest kaarigars and register in seconds.</p><a class="btn" href="${me ? '#/dash' : '#/signup'}">${me ? 'Go to dashboard' : 'Get started'}</a></section><h2>Upcoming melas</h2>` + (l.length ? `<div class="grid">${l.map(melaCard).join('')}</div>` : '<p>No upcoming melas yet.</p>');
+        }
+
+        function mela(id) {
+            const m = db.melas.find(x => x.id === id);
+            if (!m) return '<p>Event not found.</p>';
+            meta(m.name, m.desc); ld(m);
+            const ks = db.apps.filter(a => a.mela === id && a.status === 'approved').map(a => U(a.user)).filter(Boolean);
+            let act = '';
+            if (!me) act = '<p class="mu"><a href="#/login">Log in</a> or <a href="#/signup">sign up</a> to RSVP or apply.</p>';
+            else if (me.role === 'visitor') {
+                const r = db.rsvps.some(x => x.mela === id && x.user === me.id);
+                act = r ? '<p>✅ You are registered for this event.</p>' : `<button onclick="rsvp('${id}')">RSVP for this event</button>`;
+            } else if (me.role === 'kaarigar') {
+                const a = db.apps.find(x => x.mela === id && x.user === me.id);
+                act = a ? `<p>Your application: ${tag(a.status)}</p>` : `<button onclick="apply('${id}')">Apply as kaarigar</button>`;
+            }
+            return `<a href="#/">← All melas</a><h1>${esc(m.name)}</h1><div class="mu">📅 ${fmt(m.date)} · 📍 ${esc(m.location)}</div><p>${esc(m.desc)}</p>${note ? `<div class="msg">${esc(note)}</div>` : ''}${act}调度<h2>Kaarigars taking part</h2>` + (ks.length ? `<div class="grid">${ks.map(k => kCard(k)).join('')}</div>` : '<p class="mu">No approved kaarigars yet.</p>');
+        }
+
+        function kCard(k) {
+            const ini = (k.name || '').split(' ').map(w => w[0]).slice(0, 2).join('').toUpperCase();
+            return `<article class="card">${k.photo ? `<img class="ph" src="${k.photo}" alt="${esc(k.name)}'s craft">` : `<div class="av" aria-hidden="true">${esc(ini)}</div>`}<h3>${esc(k.name)}</h3><div class="mu"><b>${esc(k.craft || '')}</b></div><p>${esc(k.desc || '')}</p></article>`;
+        }
+
+        async function rsvp(id) {
+            const newRsvp = { id: uid(), mela: id, user: me.id };
+            db.rsvps.push(newRsvp);
+            saveLocal();
+            if (isSupabaseConfigured()) {
+                await dbClient.from('rsvps').insert({ mela_id: id, user_id: me.id });
+            }
+            render();
+        }
+
+        async function apply(id) {
+            if (!me.craft) { note = 'Complete your craft profile in the dashboard first.'; return go('#/dash'); }
+            const newApp = { id: uid(), mela: id, user: me.id, status: 'pending' };
+            db.apps.push(newApp);
+            saveLocal();
+            if (isSupabaseConfigured()) {
+                await dbClient.from('applications').insert({ mela_id: id, user_id: me.id, status: 'pending' });
+            }
+            render();
+        }
+
+        async function setStatus(id, s) {
+            const app = db.apps.find(a => a.id === id);
+            if (app) {
+                app.status = s;
+                saveLocal();
+                if (isSupabaseConfigured()) {
+                    await dbClient.from('applications').update({ status: s }).eq('id', id);
+                }
+            }
+            render();
+        }
+
+        function login() {
+            meta('Log in', 'Log in to Kaarigar Expo');
+            return `<h1>Log in</h1>${note ? `<div class="msg">${esc(note)}</div>` : ''}<form class="card" onsubmit="doLogin(event)"><label>Email<input name="email" type="email" required></label><label>Password<input name="pass" type="password" required></label><button>Log in</button></form>`;
+        }
+
+        async function doLogin(e) {
+            e.preventDefault();
+            const f = new FormData(e.target);
+            const email = f.get('email').trim().toLowerCase();
+            const pass = f.get('pass');
+
+            if (isSupabaseConfigured()) {
+                const { data, error } = await dbClient.from('profiles').select('*').eq('email', email).eq('pass', pass).single();
+                if (error || !data) { note = 'Invalid email or password.'; return render(); }
+                me = { ...data, desc: data.description };
+            } else {
+                const u = db.users.find(x => x.email === email && x.pass === pass);
+                if (!u) { note = 'Invalid email or password.'; return render(); }
+                me = u;
+            }
+            note = ''; saveLocal(); go('#/dash'); loadData();
+        }
+
+        function signup() {
+            meta('Sign up', 'Create a visitor or kaarigar account');
+            return `<h1>Sign up</h1>${note ? `<div class="msg">${esc(note)}</div>` : ''}<form class="card" onsubmit="doSignup(event)"><label>I am a<select name="role"><option value="visitor">Visitor</option><option value="kaarigar">Kaarigar (artisan)</option></select></label><label>Name<input name="name" required></label><label>Email<input name="email" type="email" required></label><label>Password<input name="pass" type="password" minlength="4" required></label><button>Create account</button></form>`;
+        }
+
+        async function doSignup(e) {
+            e.preventDefault();
+            const f = new FormData(e.target);
+            const email = f.get('email').trim().toLowerCase();
+            const name = f.get('name').trim();
+            const role = f.get('role');
+            const pass = f.get('pass');
+
+            if (db.users.some(u => u.email === email)) { note = 'Email already registered.'; return render(); }
+
+            if (isSupabaseConfigured()) {
+                const { data, error } = await dbClient.from('profiles').insert({ role, name, email, pass }).select().single();
+                if (error) { note = 'Signup failed: ' + error.message; return render(); }
+                me = { ...data, desc: data.description };
+            } else {
+                me = { id: uid(), role, name, email, pass };
+                db.users.push(me);
+            }
+            note = ''; saveLocal(); go('#/dash'); loadData();
+        }
+
+        function dash() {
+            if (!me) { note = 'Please log in.'; go('#/login'); return ''; }
+            meta('Dashboard', 'Your Kaarigar Expo dashboard');
+            const n = note ? `<div class="msg">${esc(note)}</div>` : ''; note = '';
+            if (me.role === 'admin') return n + adminV();
+            if (me.role === 'kaarigar') return n + kaarV();
+            return n + visV();
+        }
+
+        function adminV() {
+            return `<h1>Admin Dashboard</h1><h2>Create a mela</h2><form class="card" onsubmit="addMela(event)"><label>Name<input name="name" required></label><label>Date<input name="date" type="date" required></label><label>Location<input name="loc" required></label><label>Description<textarea name="desc" rows="2"></textarea></label><button>Create mela</button></form>` +
+                db.melas.map(m => {
+                    const ap = db.apps.filter(a => a.mela === m.id), rv = db.rsvps.filter(r => r.mela === m.id);
+                    return `<section class="card"><h3>${esc(m.name)} <span class="mu">${fmt(m.date)} · ${esc(m.location)}</span></h3><h4>Kaarigar applications (${ap.length})</h4>` +
+                        (ap.map(a => {
+                            const k = U(a.user) || { name: 'Unknown User', craft: '' };
+                            return `<div class="row"><span>${esc(k.name)} — <span class="mu">${esc(k.craft || '')}</span> ${tag(a.status)}</span><span><button class="g" onclick="setStatus('${a.id}','approved')">Approve</button> <button class="r" onclick="setStatus('${a.id}','rejected')">Reject</button></span></div>`;
+                        }).join('<hr>') || '<p class="mu">None yet.</p>') +
+                        `<h4>Visitors registered (${rv.length})</h4>` +
+                        (rv.map(r => `<div>${esc(U(r.user)?.name || 'Visitor')} <span class="mu">${esc(U(r.user)?.email || '')}</span></div>`).join('') || '<p class="mu">None yet.</p>') +
+                        `</section>`;
+                }).join('');
+        }
+
+        async function addMela(e) {
+            e.preventDefault();
+            const f = new FormData(e.target);
+            const name = f.get('name'), date = f.get('date'), location = f.get('loc'), desc = f.get('desc');
+
+            if (isSupabaseConfigured()) {
+                const { error } = await dbClient.from('melas').insert({ name, date, location, description: desc });
+                if (error) { note = 'Error adding mela: ' + error.message; return render(); }
+                await loadData();
+            } else {
+                db.melas.push({ id: uid(), name, date, location, desc });
+                saveLocal(); render();
+            }
+        }
+
+        function kaarV() {
+            const my = db.apps.filter(a => a.user === me.id);
+            return `<h1>Kaarigar dashboard</h1><h2>My craft profile</h2><form class="card" onsubmit="saveProf(event)"><label>Craft type<input name="craft" value="${esc(me.craft || '')}" required></label><label>Short description<textarea name="desc" rows="3" required>${esc(me.desc || '')}</textarea></label><label>Photo (optional)<input name="photo" type="file" accept="image/*"></label>${me.photo ? `<img class="ph" src="${me.photo}" alt="Your craft" style="max-width:240px">` : ''}<button>Save profile</button></form><h2>My applications</h2>` +
+                (my.map(a => `<div class="card row"><a href="#/mela/${a.mela}">${esc(db.melas.find(m => m.id === a.mela)?.name || 'Event')}</a>${tag(a.status)}</div>`).join('') || '<p class="mu">No applications yet.</p>') +
+                `<h2>Apply to a mela</h2><div class="grid">` +
+                upcoming().filter(m => !my.some(a => a.mela === m.id)).map(m => `<div class="card"><b>${esc(m.name)}</b><div class="mu">${fmt(m.date)}</div><button onclick="apply('${m.id}')">Apply</button></div>`).join('') + `</div>`;
+        }
+
+        async function saveProf(e) {
+            e.preventDefault();
+            const f = new FormData(e.target);
+            me.craft = f.get('craft');
+            me.desc = f.get('desc');
+            const file = f.get('photo');
+
+            const finalize = async () => {
+                saveLocal();
+                if (isSupabaseConfigured()) {
+                    await dbClient.from('profiles').update({ craft: me.craft, description: me.desc, photo: me.photo }).eq('id', me.id);
+                }
+                note = 'Profile saved.';
+                render();
+            };
+
+            if (file && file.size) {
+                const r = new FileReader();
+                r.onload = () => {
+                    const i = new Image();
+                    i.onload = () => {
+                        const c = document.createElement('canvas'), s = Math.min(1, 480 / i.width);
+                        c.width = i.width * s; c.height = i.height * s;
+                        c.getContext('2d').drawImage(i, 0, 0, c.width, c.height);
+                        me.photo = c.toDataURL('image/jpeg', 0.7);
+                        finalize();
+                    };
+                    i.src = r.result;
+                };
+                r.readAsDataURL(file);
+            } else {
+                finalize();
+            }
+        }
+
+        function visV() {
+            const mine = db.rsvps.filter(r => r.user === me.id);
+            return `<h1>Visitor dashboard</h1><h2>My RSVPs</h2>` +
+                (mine.map(r => {
+                    const m = db.melas.find(x => x.id === r.mela);
+                    return `<div class="card"><a href="#/mela/${m?.id}">${esc(m?.name || 'Event')}</a> <span class="mu">${fmt(m?.date)}</span></div>`;
+                }).join('') || '<p class="mu">No RSVPs yet.</p>') +
+                `<h2>Upcoming melas</h2><div class="grid">${upcoming().map(melaCard).join('')}</div>`;
+        }
+
+        function render() {
+            if (loading) {
+                document.getElementById('app').innerHTML = '<div style="text-align:center;padding:40px" class="mu">Loading data...</div>';
+                return;
+            }
+            const h = location.hash || '#/'; let v;
+            if (h.startsWith('#/mela/')) v = mela(h.slice(7));
+            else if (h === '#/login') v = login();
+            else if (h === '#/signup') v = signup();
+            else if (h === '#/dash') v = dash();
+            else v = home();
+            document.getElementById('app').innerHTML = v; nav(); window.scrollTo(0, 0);
+        }
+
+        addEventListener('hashchange', () => { note = ''; render(); });
+        loadData();
+    </script>
+</body>
+
+</html>
