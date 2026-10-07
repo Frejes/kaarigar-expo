@@ -20,4 +20,5 @@ Demo logins: admin `admin@kaarigar.expo` / `admin123`; kaarigar `meera@demo.in` 
 
 - **Backend & Database:** Integrated live **Supabase PostgreSQL** cloud backend with real-time sync across devices, plus automatic fallback to browser `localStorage` when offline.
 
-Website link: https://kaarigar-expo-omega.vercel.app/
+- Website link: https://kaarigar-expo-omega.vercel.app/
+- Apk version is provided 'kaarigar.apk'
