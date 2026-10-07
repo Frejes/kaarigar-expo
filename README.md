@@ -19,3 +19,5 @@ Demo logins: admin `admin@kaarigar.expo` / `admin123`; kaarigar `meera@demo.in` 
 - SEO basics: semantic HTML, per-page title and meta description, Open Graph tags, schema.org `Event` JSON-LD.
 
 - **Backend & Database:** Integrated live **Supabase PostgreSQL** cloud backend with real-time sync across devices, plus automatic fallback to browser `localStorage` when offline.
+
+Website link: https://kaarigar-expo-omega.vercel.app/
